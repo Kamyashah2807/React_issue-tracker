@@ -17,7 +17,7 @@ const getsingleUsers = (user) => ({
 
 const updatedUsers = () => ({
     type: types.UPDATE_USER,
-})  
+})
 
 const addUsers = (user) => ({
     type: types.ADD_USER,
@@ -40,7 +40,7 @@ const getsinglePosts = (post) => ({
 
 const updatedPosts = () => ({
     type: types.UPDATE_POST,
-})  
+})
 
 const deletePosts = () => ({
     type: types.DELETE_POST,
@@ -103,7 +103,7 @@ export const updateUser = (user, id) => {
             })
             .catch((err) => console.log(err));
     }
-} 
+}
 
 export const loadPosts = () => {
     return function (dispatch) {

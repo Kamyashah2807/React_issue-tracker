@@ -71,7 +71,7 @@ function Home() {
                     <Modal.Title>Add Issue</Modal.Title>
                 </Modal.Header>
                 <form
-                   
+
                     style={{ margin: "5px", padding: "5px", textAlign: "left" }}
                 >
                     {flag && (
@@ -125,7 +125,7 @@ function Home() {
                 >
                     Submit
                 </button>
-               
+
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close

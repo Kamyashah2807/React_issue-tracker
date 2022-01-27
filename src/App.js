@@ -7,7 +7,6 @@ import Registration from './Components/Registration';
 import DisplayPost from './Components/User/UserDisplay';
 import EditPost from './Components/User/EditPost';
 import EditUser from './Components/Admin/EditUser';
-import AddUser from './Components/Admin/AddUser';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
         <Route path="/display-data" element={<DisplayPost />} />
         <Route path="/edit/:id" element={<EditPost />} />
         <Route path="/edit-user/:id" element={<EditUser />} />
-        <Route path="/adduser" element={<AddUser />} />
       </Routes>
     </div>
   );

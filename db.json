@@ -20,6 +20,13 @@
       "password": "123456",
       "usertype": "User",
       "id": 3
+    },
+    {
+      "name": "abcd",
+      "email": "abcd@gmail.com",
+      "password": "123123",
+      "usertype": "User",
+      "id": 4
     }
   ],
   "posts": [
@@ -50,13 +57,6 @@
       "description": "<p>dfvsegvf</p>",
       "status": "In Review",
       "id": 4
-    },
-    {
-      "user_id": "2",
-      "title": "hgjng",
-      "description": "<p>ungugu</p>",
-      "status": "Processing",
-      "id": 5
     },
     {
       "user_id": "3",

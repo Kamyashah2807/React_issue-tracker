@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Badge } from "react-bootstrap";
+import { Modal, Badge, Button, Alert } from "react-bootstrap";
 import { MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBContainer, MDBBtnGroup } from "mdb-react-ui-kit";
-import { deleteUser, loadUsers, loadPosts } from '../../Redux/actions';
+import { deleteUser, loadUsers, loadPosts, addUser } from '../../Redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function Display() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [state, setState] = useState({
+        user_id: localStorage.getItem("Userid"),
+        name: "",
+        email: "",
+        password: "",
+    });
+
+    const { name, email, password } = state;
+    const [flag, setFlag] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     let dispatch = useDispatch();
 
@@ -26,21 +39,94 @@ function Display() {
         }
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!name || !email || !password) {
+            setFlag(true);
+        } else {
+            dispatch(addUser(state));
+            window.location.reload();
+            localStorage.setItem("Name", JSON.stringify(name));
+            localStorage.setItem("Email", JSON.stringify(email));
+            localStorage.setItem("Password", JSON.stringify(password));
+            history(`/display`)
+        }
+    }
+
     const handleLogout = (e) => {
         e.preventDefault();
         localStorage.clear();
         history("/");
     }
 
-    const handleAdd = (e) => {
-        e.preventDefault();
-        history(`/adduser`);
-    }
-
     return (
         <MDBContainer>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Issue</Modal.Title>
+                </Modal.Header>
+                <form
+                    onSubmit={handleSubmit}
+                    style={{ margin: "5px", padding: "5px", textAlign: "left" }}
+                >
+                    {flag && (
+                        <Alert color="primary" variant="danger">
+                            Please Fill Every Field
+                        </Alert>
+                    )}
+
+                    <div className='form-group'>
+                        <label className='form-label'>Name</label>
+                        <input
+                            type="text"
+                            className='form-control'
+                            placeholder='Enter Name'
+                            value={name || ""}
+                            name="name"
+                            onChange={(e) => setState({ ...state, name: e.target.value })}
+                        />
+                    </div>
+
+                    <div className='form-group'>
+                        <label className='form-label'>Email</label>
+                        <input
+                            type="email"
+                            className='form-control'
+                            placeholder='Enter Email'
+                            value={email || ""}
+                            name="email"
+                            onChange={(e) => setState({ ...state, email: e.target.value })}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label className='form-label'>Password</label>
+                        <input
+                            type="password"
+                            className='form-control'
+                            placeholder='Enter password'
+                            value={password || ""}
+                            name="password"
+                            onChange={(e) => setState({ ...state, password: e.target.value })}
+                        />
+                    </div>
+                </form>
+                <button
+                    style={{ margin: "20px", width: "100px" }}
+                    type='submit'
+                    className='btn btn-primary'
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </button>
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div style={{ marginTop: "20px", textAlign: "right" }}>
-            <MDBBtnGroup className="btn btn-success" onClick={handleAdd}>Add User</MDBBtnGroup> &nbsp;
+                <MDBBtnGroup className="btn btn-success" onClick={handleShow}>Add User</MDBBtnGroup> &nbsp;
                 <MDBBtnGroup className="btn btn-warning" onClick={handleLogout}>Logout</MDBBtnGroup>
 
                 <form style={{
@@ -61,6 +147,7 @@ function Display() {
                             <MDBTable>
                                 <MDBTableHead dark>
                                     <tr align="center">
+                                        <th>Id</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Password</th>
@@ -78,6 +165,7 @@ function Display() {
                                 }).map((user) => (
                                     <MDBTableBody key={user.id}>
                                         <tr align="center">
+                                            <td>{user.id}</td>
                                             <td>{user.name}</td>
                                             <td>{user.email}</td>
                                             <td>{user.password}</td>
@@ -101,22 +189,24 @@ function Display() {
                             <MDBTable>
                                 <MDBTableHead dark>
                                     <tr align="center">
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Status</th>
+                                        <th>User Id</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
                                     </tr>
                                 </MDBTableHead>
 
-                                {posts.filter((val) => {
+                                {users && posts.filter((val) => {
                                     if (searchTerm === "") {
                                         return val
                                     }
                                     else if (val.title.toLowerCase().includes(searchTerm.toLowerCase()) || val.description.toLowerCase().includes(searchTerm.toLowerCase()) || val.status.toLowerCase().includes(searchTerm.toLowerCase())) {
                                         return val;
                                     }
-                                }).map((post) => (
+                                }).map((post, user) => (
                                     <MDBTableBody key={post.id}>
                                         <tr align="center">
+                                            <td>{post.user_id}</td>
                                             <td>{post.title}</td>
                                             <td><div dangerouslySetInnerHTML={{ __html: post.description }} /></td>
                                             <td>
