@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "usertype": "Admin",
+      "id": 1
+    },
+    {
+      "name": "User",
+      "email": "user@gmail.com",
+      "password": "user",
+      "usertype": "User",
+      "id": 2
+    },
+    {
+      "name": "abc",
+      "email": "abc@gmail.com",
+      "password": "123456",
+      "usertype": "User",
+      "id": 3
+    }
+  ],
+  "posts": [
+    {
+      "user_id": "2",
+      "title": "hgnjgh",
+      "description": "<p>nghnghn</p>",
+      "status": "Processing",
+      "id": 1
+    }
+  ]
+}
