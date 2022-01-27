@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Badge } from "react-bootstrap";
 import { MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBContainer, MDBBtnGroup } from "mdb-react-ui-kit";
-import { deleteUser, loadUsers, loadPosts } from '../Redux/actions';
+import { deleteUser, loadUsers, loadPosts } from '../../Redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,10 +32,16 @@ function Display() {
         history("/");
     }
 
+    const handleAdd = (e) => {
+        e.preventDefault();
+        history(`/adduser`);
+    }
+
     return (
         <MDBContainer>
             <div style={{ marginTop: "20px", textAlign: "right" }}>
-                <MDBBtnGroup className="btn btn-danger" onClick={handleLogout}>Logout</MDBBtnGroup>
+            <MDBBtnGroup className="btn btn-success" onClick={handleAdd}>Add User</MDBBtnGroup> &nbsp;
+                <MDBBtnGroup className="btn btn-warning" onClick={handleLogout}>Logout</MDBBtnGroup>
 
                 <form style={{
                     margin: "auto",
@@ -65,7 +72,7 @@ function Display() {
                                     if (searchTerm === "") {
                                         return val
                                     }
-                                    else if (val.name.toLowerCase().includes(searchTerm.toLowerCase()) || val.email.toLowerCase().includes(searchTerm.toLowerCase()) ) {
+                                    else if (val.name.toLowerCase().includes(searchTerm.toLowerCase()) || val.email.toLowerCase().includes(searchTerm.toLowerCase())) {
                                         return val;
                                     }
                                 }).map((user) => (
@@ -75,7 +82,8 @@ function Display() {
                                             <td>{user.email}</td>
                                             <td>{user.password}</td>
                                             <td>
-                                                <MDBBtnGroup className='btn btn-primary'onClick={() => handleDelete(user.id)}>Delete</MDBBtnGroup>
+                                                <MDBBtnGroup className='btn btn-primary' onClick={() => history(`/edit-user/${user.id}`)}>Edit</MDBBtnGroup> &nbsp;
+                                                <MDBBtnGroup className='btn btn-danger' onClick={() => handleDelete(user.id)}>Delete</MDBBtnGroup>
                                             </td>
                                         </tr>
                                     </MDBTableBody>
@@ -111,7 +119,12 @@ function Display() {
                                         <tr align="center">
                                             <td>{post.title}</td>
                                             <td><div dangerouslySetInnerHTML={{ __html: post.description }} /></td>
-                                            <td>{post.status}</td>
+                                            <td>
+                                                {post.status === "Open" ? <Badge bg="primary">{post.status}</Badge> : null}
+                                                {post.status === "Processing" ? <Badge bg="info">{post.status}</Badge> : null}
+                                                {post.status === "In Review" ? <Badge bg="warning">{post.status}</Badge> : null}
+                                                {post.status === "Completed" ? <Badge bg="success">{post.status}</Badge> : null}
+                                            </td>
                                         </tr>
                                     </MDBTableBody>
                                 ))
