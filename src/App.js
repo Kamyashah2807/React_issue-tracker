@@ -10,7 +10,7 @@ import EditUser from './Components/Admin/EditUser';
 
 function App() {
   return (
-    <div>
+    <div className='App'>
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/register" element={<Registration />} />

@@ -40,74 +40,75 @@ function Registration() {
     }
 
     return (
-        <div>
-            <form
-                onSubmit={handleSubmit}
-                style={{
-                    margin: "15px", padding: "30px", textAlign: "left"
-                }}
-            >
-                <h1 align="center">Registration Form</h1>
-                {flag && (
-                    <Alert color="primary" variant="danger">
-                        Please Fill Every Field
-                    </Alert>
-                )}
-                <div className='form-group'>
-                    <label className='form-label'>User Type</label>
-                    <select
-                        className='form-select'
-                        onChange={handleInput}
-                        name="usertype"
-                        value={usertype}
-                    >
-                        <option value>--Select--</option>
-                        <option>User</option>
-                        <option>Admin</option>
-                    </select>
-                </div>
-                <div className='form-group'>
-                    <label className='form-label'>Name</label>
-                    <input
-                        type="text"
-                        className='form-control'
-                        placeholder='Enter Name'
-                        value={name}
-                        name='name'
-                        onChange={handleInput}
-                    />
-                </div>
-                <div className='form-group'>
-                    <label className='form-label'>Email</label>
-                    <input
-                        type="email"
-                        className='form-control'
-                        placeholder='Enter Email'
-                        value={email}
-                        name='email'
-                        onChange={handleInput}
-                    />
-                </div>
-                <div className='form-group'>
-                    <label className='form-label'>Password</label>
-                    <input
-                        type="password"
-                        className='form-control'
-                        placeholder='Enter Password'
-                        value={password}
-                        name='password'
-                        onChange={handleInput}
-                    />
-                </div>
-                <button
-                    style={{ margin: "20px", width: "100px" }}
-                    type='submit'
-                    className='btn btn-primary'
+        <div className='outer'>
+            <div className='inner'>
+                <form
+                    onSubmit={handleSubmit}
                 >
-                    Register
-                </button>
-                <Link to="/">Already registerd?</Link>
-            </form>
+                    <h3 className='col mb-3'>Sign-Up</h3>
+
+                    {flag && (
+                        <Alert color="primary" variant="danger">
+                            Please Fill Every Field
+                        </Alert>
+                    )}
+
+                    <div className='form-group'>
+                        <label className='form-label'>User Type</label>
+                        <select
+                            className='form-select'
+                            onChange={handleInput}
+                            name="usertype"
+                            value={usertype}
+                        >
+                            <option value>--Select--</option>
+                            <option>User</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                    <div className='form-group'>
+                        <label className='form-label'>Name</label>
+                        <input
+                            type="text"
+                            className='form-control'
+                            placeholder='Enter Name'
+                            value={name}
+                            name='name'
+                            onChange={handleInput}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label className='form-label'>Email</label>
+                        <input
+                            type="email"
+                            className='form-control'
+                            placeholder='Enter Email'
+                            value={email}
+                            name='email'
+                            onChange={handleInput}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label className='form-label'>Password</label>
+                        <input
+                            type="password"
+                            className='form-control'
+                            placeholder='Enter Password'
+                            value={password}
+                            name='password'
+                            onChange={handleInput}
+                        />
+                    </div>
+                    <button
+                        style={{ margin: "20px", width: "100px" }}
+                        type='submit'
+                        className='btn btn-primary'
+                    >
+                        Register
+                    </button>
+                    <Link to="/">Already registerd?</Link>
+                </form>
+            </div>
         </div>
     )
 }

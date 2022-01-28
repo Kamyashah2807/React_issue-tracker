@@ -3,6 +3,7 @@ import { Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import { loadUsers } from '../Redux/actions';
 import { useNavigate, Link } from 'react-router-dom';
+import "../App.css"
 
 function Login() {
     let dispatch = useDispatch();
@@ -49,52 +50,51 @@ function Login() {
     }
 
     return (
-        <div>
-            <form
-                onSubmit={handleLogin}
-                style={{
-                    margin: "15px", padding: "50px", textAlign: "left"
-                }}
-            >
-                <h1 align="center">Login Form</h1>
-                {flag && (
-                    <Alert color="primary" variant="danger">
-                        Invalid Login Details
-                    </Alert>
-                )}
-                <div className='form-group'>
-                    <label className='form-label'>Email</label>
-                    <input
-                        type="email"
-                        className='form-control'
-                        placeholder='Enter Email'
-                        value={email}
-                        name='email'
-                        onChange={(e) => setEmail(e.target.value)}
-
-                    />
-                </div>
-                <div className='form-group'>
-                    <label className='form-label'>Password</label>
-                    <input
-                        type="password"
-                        className='form-control'
-                        placeholder='Enter Password'
-                        value={password}
-                        name='password'
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button
-                    style={{ margin: "20px", width: "100px" }}
-                    type='submit'
-                    className='btn btn-primary'
+        <div className='outer'>
+            <div className='inner'>
+                <form
+                    onSubmit={handleLogin}
                 >
-                    Login
-                </button>
-                <Link to="/register">Not registerd?</Link>
+                    <h3 className='col mb-3'>Sign-In</h3>
+                    {flag && (
+                        <Alert color="primary" variant="danger">
+                            Invalid Login Details
+                        </Alert>
+                    )}
+                    <div className='form-group'>
+                        <label className='form-label'>Email</label>
+                        <input
+                            type="email"
+                            className='form-control'
+                            placeholder='Enter Email'
+                            value={email}
+                            name='email'
+                            onChange={(e) => setEmail(e.target.value)}
 
-            </form>
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label className='form-label'>Password</label>
+                        <input
+                            type="password"
+                            className='form-control'
+                            placeholder='Enter Password'
+                            value={password}
+                            name='password'
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button
+                        style={{ margin: "20px", width: "100px" }}
+                        type='submit'
+                        className='btn btn-primary'
+                    >
+                        Login
+                    </button>
+                    <Link to="/register">Not registerd?</Link>
+
+                </form>
+            </div>
         </div>
     )
 }
