@@ -190,6 +190,7 @@ function Display() {
                                 <MDBTableHead dark>
                                     <tr align="center">
                                         <th>User Id</th>
+                                        <th>Image</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Status</th>
@@ -208,6 +209,7 @@ function Display() {
                                         <tr align="center">
                                             <td>{post.user_id}</td>
                                             <td>{post.title}</td>
+                                            <td>{post.image ? <img src={require(`../images/${post.image}`)} style={{ height: "100px", width: "100px" }} /> : null}</td>
                                             <td><div dangerouslySetInnerHTML={{ __html: post.description }} /></td>
                                             <td>
                                                 {post.status === "Open" ? <Badge bg="primary">{post.status}</Badge> : null}

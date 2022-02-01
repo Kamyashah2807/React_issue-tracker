@@ -11,15 +11,15 @@ const EditPost = () => {
     const [state, setState] = useState({
         user_id: localStorage.getItem("Userid"),
         title: "",
+        image: "",
         description: "",
         status: "",
     });
-    const [show, setShow] = useState(false);
 
     let { id } = useParams();
     const { post } = useSelector(state => state.data)
 
-    const { title, description, status } = state;
+    const { title, image, description, status } = state;
     const [flag, setFlag] = useState(false);
 
     let dispatch = useDispatch();
@@ -28,32 +28,41 @@ const EditPost = () => {
     function handleInput(e, editor) {
         const data = editor.getData();
         setState({ ...state, description: data });
+        console.log(data);
+    }
+
+    const handleImage = (e) => {
+        console.log(e.target.files[0].name);
+        var image = e.target.files[0].name;
+        if (e.target.files && e.target.files[0] && e.target.files.length > 0) {
+            setState({ ...state, image: image });
+        }
+        console.log(image);
     }
 
     useEffect(() => {
-        dispatch(getSinglePost(id))
+        dispatch(getSinglePost(id));
     }, []);
 
     useEffect(() => {
         if (post) {
             setState({ ...post })
         }
+        console.log(post);
     }, [post]);
 
     function handleSubmit(e) {
-
         e.preventDefault();
-        if (!title || !description || !status) {
+        if (!title || !description || !status || !image) {
             setFlag(true);
         } else {
             dispatch(updatePost(state, id));
             localStorage.setItem("Title", JSON.stringify(title));
+            localStorage.setItem("Image", JSON.stringify(image));
             localStorage.setItem("Description", JSON.stringify(description));
             localStorage.setItem("Status", JSON.stringify(status));
-            setShow(false);
             history(`/display-data`)
         }
-        setShow(false);
     }
 
     return (
@@ -77,6 +86,17 @@ const EditPost = () => {
                         value={title || ""}
                         name="title"
                         onChange={(e) => setState({ ...state, title: e.target.value })}
+                    />
+                </div>
+
+                <div className='form-group'>
+                    <label className='form-label'>File</label>
+                    <input
+                        type="file"
+                        className='form-control'
+                        placeholder='Enter File'
+                        name="image"
+                        onChange={(e) => handleImage(e)}
                     />
                 </div>
 
@@ -114,6 +134,5 @@ const EditPost = () => {
         </div>
     );
 }
-
 
 export default EditPost
